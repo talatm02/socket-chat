@@ -20,12 +20,14 @@ app.use(express.static(publicPath));
 io.on('connection',(socket)=>{
     console.log("Connection established");
 
-    socket.on('createChat',(message)=>{
-        console.log(message);
+    
+
+    socket.on('createChat',(message,callback)=>{
         socket.broadcast.emit('newChat', {
             text:message.text,
             from:message.from
         })
+        callback();
         // io.emit('newChat',{
         //     text:message.text,
         //     from:message.from
