@@ -27,7 +27,7 @@ io.on('connection',(socket)=>{
             text:message.text,
             from:message.from
         })
-        callback();
+        callback('This is from server');
         // io.emit('newChat',{
         //     text:message.text,
         //     from:message.from
