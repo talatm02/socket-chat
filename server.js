@@ -22,17 +22,34 @@ io.on('connection',(socket)=>{
 
     
 
-    socket.on('createChat',(message,callback)=>{
-        socket.broadcast.emit('newChat', {
-            text:message.text,
-            from:message.from
+    // socket.on('createChat',(message,callback)=>{
+
+    //     io.to(message.room).emit('newChat', {
+    //         text:message.text,
+    //         from:message.from
+    //     });
+    //     callback('This is from server');
+    //     // io.emit('newChat',{
+    //     //     text:message.text,
+    //     //     from:message.from
+    //     // })
+    // })
+
+    socket.on('join',(params,callback)=>{
+        if(!params) callback('no params');
+
+        socket.join(params);
+
+        socket.to(params).on('createChat',(message,callback)=>{
+
+            io.to(params).emit('newChat', {
+                text:message.text,
+                from:message.from
+            });
+            callback('This is from server');
         })
-        callback('This is from server');
-        // io.emit('newChat',{
-        //     text:message.text,
-        //     from:message.from
-        // })
-    })
+        callback()
+    });
 })
 
 server.listen(port,()=>{

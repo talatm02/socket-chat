@@ -12,9 +12,15 @@
             socket.on('connect',()=>{
                 console.log('Connected to server');
             });
-            
+
             socket.on('newChat', (message)=>{
                 console.log(message);
+            })
+
+            let params = window.location.search;
+            // console.log(params);
+            socket.emit('join',params,(err)=>{
+                if(err) console.log(err);
             })
         </script>
     </body>
